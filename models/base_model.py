@@ -1,10 +1,13 @@
 #!/usr/bin/python3
+"""
+Creating a class call BaseModel
+"""
 from uuid import uuid4 as new_id
 from datetime import datetime
 
-
 class BaseModel():
     def __init__(self, *args, **kwargs):
+        """ Function That Initialize The Class BaseModel"""
         if kwargs:
             for key, value in kwargs.items():
                 if key == "__class__":
@@ -20,15 +23,20 @@ class BaseModel():
             self.updated_at = datetime.now()
 
     def __str__(self):
+        """ Function That Return a string about the Instance """
         return ("[{}] ({}) {}".
                 format(self.__class__.__name__, self.id, self.__dict__))
 
     def save(self):
-        self.updated_at = datetime.now().isoformat()
+        """ Function that Update the attribute update_at with the current
+        time """
+        self.updated_at = datetime.now()
 
     def to_dict(self):
+        """ returns a dictionary containing all keys/values of __dict__ of
+        the instance """
         my_dict = self.__dict__.copy()
         my_dict.update({"__class__": self.__class__.__name__})
-        my_dict.update({"created_at": self.created_at})
-        my_dict.update({"updated_at": self.updated_at})
+        my_dict.update({"created_at": self.created_at.isoformat()})
+        my_dict.update({"updated_at": self.updated_at.isoformat()})
         return my_dict
