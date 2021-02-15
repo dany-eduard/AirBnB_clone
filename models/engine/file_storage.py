@@ -27,4 +27,3 @@ class FileStorage:
         with open(self.__file_path, "w") as f:
             json.dump(new_dict, f)
         print(new_dict)
-
