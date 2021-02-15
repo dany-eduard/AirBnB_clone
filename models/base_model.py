@@ -2,6 +2,7 @@
 """
 Creating a class call BaseModel
 """
+import models
 from uuid import uuid4 as new_id
 from datetime import datetime
 
@@ -21,6 +22,7 @@ class BaseModel():
             self.id = str(new_id())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
+            models.storage.new(self)
 
     def __str__(self):
         """ Function That Return a string about the Instance """
@@ -31,6 +33,7 @@ class BaseModel():
         """ Function that Update the attribute update_at with the current
         time """
         self.updated_at = datetime.now()
+        models.storage.save()
 
     def to_dict(self):
         """ returns a dictionary containing all keys/values of __dict__ of
