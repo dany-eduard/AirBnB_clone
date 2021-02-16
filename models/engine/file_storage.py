@@ -3,6 +3,7 @@
 FileStorage Class
 """
 import json
+from models.base_model import BaseModel
 
 
 class FileStorage:
@@ -26,4 +27,14 @@ class FileStorage:
             new_dict[key] = value.to_dict()
         with open(self.__file_path, "w") as f:
             json.dump(new_dict, f)
-        print(new_dict)
+
+    def reload(self):
+        try:
+            with open(self.__file_path, "r") as f:
+                my_dict = json.loads(f.read())
+            for key, value in my_dict.items():
+                class_name = value["__class__"]
+                obj = eval(class_name + '(**value)')
+                self.__objects[key] = obj
+        except FileNotFoundError:
+            pass
