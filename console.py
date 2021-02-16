@@ -30,7 +30,8 @@ class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
 
     def do_create(self, line):
-        """ Method To Create A New Instance"""
+        """ Creates a new instance of BaseModel, saves it
+        (to the JSON file) and prints the id. """
         argsLine = line.split()
 
         if line == "":
@@ -44,8 +45,8 @@ class HBNBCommand(cmd.Cmd):
             my_object.save()
 
     def do_show(self, line):
-        """ Method to show all isntance"""
-
+        """ Prints the string representation of an instance based on the
+            class name and id """
         argsLine = line.split()
         lenArgs = len(argsLine)
 
@@ -60,7 +61,8 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
 
     def do_destroy(self, line):
-        """ Do """
+        """ Deletes an instance based on the class name and id
+            (save the change into the JSON file)."""
         argsLine = line.split()
         lenArgs = len(argsLine)
         if (self.__check_if_exist(argsLine, lenArgs) != 1):
@@ -75,7 +77,8 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
 
     def do_update(self, line):
-        """Destroy the objects if exist"""
+        """Updates an instance based on the class name and id
+        by adding or updating attribute(save the change into the JSON file)"""
         argsLine = line.split()
         lenArgs = len(argsLine)
 
@@ -105,7 +108,8 @@ class HBNBCommand(cmd.Cmd):
                 print("** no instance found **")
 
     def do_all(self, line):
-        "DOiD"
+        """ Prints all string representation of all instances
+            based or not on the class name."""
         argsLine = line.split()
         if line == "" or argsLine[0] in self.__classes:
             dirClasses = models.storage.all()
@@ -117,7 +121,34 @@ class HBNBCommand(cmd.Cmd):
         else:
             print("** class doesn't exist **")
 
+    def do_count(self, line):
+        " To retrieve the number of instances of a class "
+        argsLine = line.split()
+        if line == "" or argsLine[0] in self.__classes:
+            dirClasses = models.storage.all()
+            listClasses = []
+            count = 0
+            for key, value in dirClasses.items():
+                if line in key:
+                    listClasses.append(value.__str__())
+                    count += 1
+            print(count)
+        else:
+            print("** class doesn't exist **")
+
+    def default(self, line):
+        """ Dafault function """
+        lineSplit = line.split('.')
+        if len(lineSplit) > 1:
+            if lineSplit[1] == "all()":
+                self.do_all(lineSplit[0])
+            if lineSplit[1] == "count()":
+                self.do_count(lineSplit[0])
+        else:
+            cmd.Cmd.default(self, line)
+
     def __check_if_exist(self, argsLine, lenArgs):
+        """Function that check if the class exist or the instance missing"""
         if lenArgs == 0:
             print("** class name missing **")
             return 1
