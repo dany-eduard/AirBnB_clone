@@ -91,7 +91,7 @@ class HBNBCommand(cmd.Cmd):
                 if argsLine[3]:
                     argsLine[3] = argsLine[3].replace('"', "")
                 the_classes[searchInstance].__dict__[argsLine[2]] = argsLine[3]
-                models.storage.save()
+                the_classes[searchInstance].save()
             else:
                 print("** no instance found **")
 
