@@ -7,11 +7,26 @@ import cmd
 import models
 from models.base_model import BaseModel
 from models.user import User
+from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
     """ This class to setup the command interpreter """
-    __classes = {"BaseModel": BaseModel, "User": User}
+    __classes = {
+            "BaseModel": BaseModel,
+            "User": User,
+            "State": State,
+            "City": City,
+            "Amenity": Amenity,
+            "Place": Place,
+            "Review": Review
+            }
     prompt = "(hbnb) "
 
     def do_create(self, line):
@@ -79,10 +94,11 @@ class HBNBCommand(cmd.Cmd):
                 models.storage.save()
             else:
                 print("** no instance found **")
-    def do_all(self, line):
 
+    def do_all(self, line):
+        "DOiD"
         argsLine = line.split()
-        if line == "" or argsLine[0] in  self.__classes:
+        if line == "" or argsLine[0] in self.__classes:
             dirClasses = models.storage.all()
             listClasses = []
             for key, value in dirClasses.items():
