@@ -70,11 +70,12 @@ class HBNBCommand(cmd.Cmd):
 
             if searchInstance in the_classes.keys():
                 del the_classes[searchInstance]
+                models.storage.save()
             else:
                 print("** no instance found **")
-
+"""
     def do_update(self, line):
-        """ Destroy the objects if exist"""
+        Destroy the objects if exist
         argsLine = line.split()
         lenArgs = len(argsLine)
 
@@ -94,7 +95,7 @@ class HBNBCommand(cmd.Cmd):
                 the_classes[searchInstance].save()
             else:
                 print("** no instance found **")
-
+""""
     def do_all(self, line):
         "DOiD"
         argsLine = line.split()
