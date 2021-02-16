@@ -29,6 +29,8 @@ class FileStorage:
             json.dump(new_dict, f)
 
     def reload(self):
+        """  deserializes the JSON file to __objects
+            (only if the JSON file (__file_path) exists"""
         try:
             with open(self.__file_path, "r") as f:
                 my_dict = json.loads(f.read())
