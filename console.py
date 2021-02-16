@@ -17,7 +17,8 @@ class HBNBCommand(cmd.Cmd):
     def do_create(self, line):
         """ Method To Create A New Instance"""
         argsLine = line.split()
-        if argsLine[0] == "":
+
+        if line == "":
             print("** class name missing **")
             return False
         elif argsLine[0] not in self.__classes:
@@ -47,14 +48,13 @@ class HBNBCommand(cmd.Cmd):
         """ Do """
         argsLine = line.split()
         lenArgs = len(argsLine)
-
         if (self.__check_if_exist(argsLine, lenArgs) != 1):
 
             searchInstance = argsLine[0] + "." + argsLine[1]
             the_classes = models.storage.all()
 
             if searchInstance in the_classes.keys():
-                print(the_classes[searchInstance])
+                del the_classes[searchInstance]
             else:
                 print("** no instance found **")
 
@@ -75,14 +75,25 @@ class HBNBCommand(cmd.Cmd):
             if searchInstance in the_classes.keys():
                 if argsLine[3]:
                     argsLine[3] = argsLine[3].replace('"', "")
-                    print(argsLine[3])
                 the_classes[searchInstance].__dict__[argsLine[2]] = argsLine[3]
                 models.storage.save()
             else:
                 print("** no instance found **")
+    def do_all(self, line):
+
+        argsLine = line.split()
+        if line == "" or argsLine[0] in  self.__classes:
+            dirClasses = models.storage.all()
+            listClasses = []
+            for key, value in dirClasses.items():
+                if line in key:
+                    listClasses.append(value.__str__())
+            print(listClasses)
+        else:
+            print("** class doesn't exist **")
 
     def __check_if_exist(self, argsLine, lenArgs):
-        if argsLine[0] == "":
+        if lenArgs == 0:
             print("** class name missing **")
             return 1
         elif argsLine[0] not in self.__classes:
