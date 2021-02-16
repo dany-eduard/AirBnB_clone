@@ -97,7 +97,7 @@ class HBNBCommand(cmd.Cmd):
                     try:
                         argsLine[3] = float(args[3])
                     except ValueError:
-                        argsLine = argsLine[3]
+                        argsLine[3] = argsLine[3]
                 the_classes[searchInstance].__dict__[argsLine[2]] = argsLine[3]
                 the_classes[searchInstance].save()
             else:
