@@ -8,8 +8,9 @@ from datetime import datetime
 
 
 class BaseModel():
-    """ Function That Initialize The Class BaseModel"""
+    """ Class called BaseModel"""
     def __init__(self, *args, **kwargs):
+        """ Function That Initialize The Class BaseMode"""
         if kwargs:
             for key, value in kwargs.items():
                 if key == "__class__":
