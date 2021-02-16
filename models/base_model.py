@@ -6,6 +6,7 @@ import models
 from uuid import uuid4 as new_id
 from datetime import datetime
 
+
 class BaseModel():
     def __init__(self, *args, **kwargs):
         """ Function That Initialize The Class BaseModel"""
