@@ -1,1 +1,1 @@
-{"BaseModel.d181f473-a7ae-4305-a57c-82445ede7870": {"created_at": "2021-02-16T21:37:16.655133", "id": "d181f473-a7ae-4305-a57c-82445ede7870", "__class__": "BaseModel", "updated_at": "2021-02-16T21:37:16.655669"}}
+{"BaseModel.e47e2ba8-7523-4b83-9273-105ae17fa907": {"mynumber": 23, "id": "e47e2ba8-7523-4b83-9273-105ae17fa907", "created_at": "2021-02-16T21:50:12.373626", "updated_at": "2021-02-16T21:55:20.857808", "__class__": "BaseModel"}}
