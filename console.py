@@ -91,11 +91,12 @@ class HBNBCommand(cmd.Cmd):
             if searchInstance in the_classes.keys():
                 if argsLine[3]:
                     argsLine[3] = argsLine[3].replace('"', "")
+                    print(argsLine[3])
                 try:
                     argsLine[3] = int(argsLine[3])
                 except ValueError:
                     try:
-                        argsLine[3] = float(args[3])
+                        argsLine[3] = float(argsLine[3])
                     except ValueError:
                         argsLine[3] = argsLine[3]
                 the_classes[searchInstance].__dict__[argsLine[2]] = argsLine[3]
