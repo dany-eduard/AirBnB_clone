@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 """ Module to test cases """
 from datetime import datetime
-from models.user import User
+from models.amenity import Amenity
 import unittest
 import pep8
 
 
-class TestUserClass(unittest.TestCase):
+class TestAmenityClass(unittest.TestCase):
     """ Unit test class for Base User class """
 
     def test_pep8(self):
@@ -17,20 +17,20 @@ class TestUserClass(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """ set up instances for all tests """
-        cls.user = User()
+        cls.amenity = Amenity()
 
     def test_created_at(self):
         """ Test created_at """
-        self.assertEqual(datetime, type(self.user.created_at))
+        self.assertEqual(datetime, type(self.amenity.created_at))
 
     def test_updated_at(self):
         """ Test updated_at """
-        self.assertEqual(datetime, type(self.user.updated_at))
+        self.assertEqual(datetime, type(self.amenity.updated_at))
 
-    def test_string(self):
-        """ Test for __str__ method """
-        good = "[User] ({}) {}".format(self.user.id, self.user.__dict__)
-        self.assertEqual(good, str(self.user))
+    def test_name(self):
+        """ Test name is string and is empty """
+        self.assertTrue(hasattr(self.amenity, "name"))
+        self.assertEqual(self.amenity.name, "")
 
 
 if __name__ == "__main__":

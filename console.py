@@ -16,14 +16,14 @@ class HBNBCommand(cmd.Cmd):
     """Class HBNBCommand
     for command interpreter"""
     __classes = {
-            "BaseModel": BaseModel,
-            "User": User,
-            "State": State,
-            "City": City,
-            "Amenity": Amenity,
-            "Place": Place,
-            "Review": Review
-            }
+        "BaseModel": BaseModel,
+        "User": User,
+        "State": State,
+        "City": City,
+        "Amenity": Amenity,
+        "Place": Place,
+        "Review": Review
+    }
     prompt = "(hbnb) "
 
     def do_EOF(self, line):
@@ -182,6 +182,7 @@ class HBNBCommand(cmd.Cmd):
         """ Prints new line when press enter """
         pass
 
+<<<<<<< HEAD
     def do_create(self, args):
         """ Creates a new instance of BaseModel, saves it
         (to the JSON file) and prints the id """
@@ -283,6 +284,8 @@ class HBNBCommand(cmd.Cmd):
         elif len_args == 1:
             print("** instance id missing **")
             return 1
+=======
+>>>>>>> 3e4db5cfdb8e7e77a4fb46a572c26845b3d69ac4
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
