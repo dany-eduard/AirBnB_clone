@@ -35,7 +35,7 @@ class HBNBCommand(cmd.Cmd):
 
         if line == "":
             print("** class name missing **")
-            return False
+            #return false
         elif argsLine[0] not in self.__classes:
             print("** class doesn't exist **")
         else:
@@ -70,7 +70,7 @@ class HBNBCommand(cmd.Cmd):
     def do_destroy(self, line):
         """ Deletes an instance based on the class name and id
             (save the change into the JSON file)."""
-        if (type(line) == str):
+        if(type(line) == str):
             argsLine = line.split()
             lenArgs = len(argsLine)
             if (self.__check_if_exist(argsLine, lenArgs) != 1):
@@ -83,11 +83,11 @@ class HBNBCommand(cmd.Cmd):
                     models.storage.save()
                 else:
                     print("** no instance found **")
-        else:  # Does not work with <class name>.destroy(<id>)
+        else:
             searchID = line[0] + "." + line[1]
             the_classes = models.storage.all()
             if searchID in the_classes.keys():
-                del the_classes[searchID]
+                del (the_classes[searchID])
                 models.storage.save()
             else:
                 print("** no instance found **")
@@ -95,10 +95,13 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, line):
         """Updates an instance based on the class name and id
         by adding or updating attribute(save the change into the JSON file)"""
-        argsLine = line.split()
+        if(type(line) == str):
+            argsLine = line.split()
+        else:
+            argsLine = line
         lenArgs = len(argsLine)
 
-        if (self.__check_if_exist(argsLine, lenArgs) == 1):
+        if self.__check_if_exist(argsLine, lenArgs) == 1:
             pass
         elif (lenArgs == 2):
             print("** attribute name missing **")
@@ -160,12 +163,24 @@ class HBNBCommand(cmd.Cmd):
             if lineSplit[1] == "count()":
                 self.do_count(lineSplit[0])
 
-            my_count = lineSplit[1].split('"')
-            res = re.findall(r'\(.*?\)', lineSplit[1])
-            my_count[0] = my_count[0] + line[-1]
-            if my_count[0] == "show()":
-                myNewList = [lineSplit[0], my_count[1]]
-                self.do_show(myNewList)
+            splitFunction = lineSplit[1][:-1].split('"', 1)
+            temp = splitFunction[0]
+            if(len(splitFunction)  > 1):
+                splitFunction[1] = splitFunction[1].replace('"', "")
+                splitFunction[1] = splitFunction[1].replace(' ', "")
+                splitFunction = (splitFunction[1].split(","))
+                splitFunction.insert(0, temp)
+                del temp
+                splitFunction[0] = splitFunction[0] + line[-1]
+                if splitFunction[0] == "show()":
+                    myNewList = [lineSplit[0], splitFunction[1]]
+                    self.do_show(myNewList)
+                if splitFunction[0] == "destroy()":
+                    myNewList = [lineSplit[0], splitFunction[1]]
+                    self.do_destroy(myNewList)
+                if splitFunction[0] == "update()":
+                    splitFunction[0] = lineSplit[0]
+                    self.do_update(splitFunction)
         else:
             cmd.Cmd.default(self, line)
 
