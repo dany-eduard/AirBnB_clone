@@ -3,10 +3,9 @@
 The Line Command To The APi (BackEnd)
 """
 
+import re
 import cmd
 import models
-from models.base_model import BaseModel
-from models.user import User
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -47,16 +46,24 @@ class HBNBCommand(cmd.Cmd):
     def do_show(self, line):
         """ Prints the string representation of an instance based on the
             class name and id """
-        argsLine = line.split()
-        lenArgs = len(argsLine)
+        if (type(line) == str):
+            argsLine = line.split()
+            lenArgs = len(argsLine)
 
-        if (self.__check_if_exist(argsLine, lenArgs) != 1):
+            if (self.__check_if_exist(argsLine, lenArgs) != 1):
 
-            searchInstance = argsLine[0] + "." + argsLine[1]
+                searchInstance = argsLine[0] + "." + argsLine[1]
+                the_classes = models.storage.all()
+
+                if searchInstance in the_classes.keys():
+                    print(the_classes[searchInstance])
+                else:
+                    print("** no instance found **")
+        else:
+            searchID = line[0] + "." + line[1]
             the_classes = models.storage.all()
-
-            if searchInstance in the_classes.keys():
-                print(the_classes[searchInstance])
+            if searchID in the_classes.keys():
+                print(the_classes[searchID])
             else:
                 print("** no instance found **")
 
@@ -94,7 +101,6 @@ class HBNBCommand(cmd.Cmd):
             if searchInstance in the_classes.keys():
                 if argsLine[3]:
                     argsLine[3] = argsLine[3].replace('"', "")
-                    print(argsLine[3])
                 try:
                     argsLine[3] = int(argsLine[3])
                 except ValueError:
@@ -144,6 +150,13 @@ class HBNBCommand(cmd.Cmd):
                 self.do_all(lineSplit[0])
             if lineSplit[1] == "count()":
                 self.do_count(lineSplit[0])
+
+            my_count = lineSplit[1].split('"')
+            res = re.findall(r'\(.*?\)', lineSplit[1])
+            my_count[0] = my_count[0] + line[-1]
+            if my_count[0] == "show()":
+                myNewList = [lineSplit[0], my_count[1]]
+                self.do_show(myNewList)
         else:
             cmd.Cmd.default(self, line)
 
