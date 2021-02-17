@@ -18,14 +18,14 @@ from models.review import Review
 class HBNBCommand(cmd.Cmd):
     """ This class to setup the command interpreter """
     __classes = {
-            "BaseModel": BaseModel,
-            "User": User,
-            "State": State,
-            "City": City,
-            "Amenity": Amenity,
-            "Place": Place,
-            "Review": Review
-            }
+        "BaseModel": BaseModel,
+        "User": User,
+        "State": State,
+        "City": City,
+        "Amenity": Amenity,
+        "Place": Place,
+        "Review": Review
+    }
     prompt = "(hbnb) "
 
     def do_create(self, line):
@@ -70,15 +70,24 @@ class HBNBCommand(cmd.Cmd):
     def do_destroy(self, line):
         """ Deletes an instance based on the class name and id
             (save the change into the JSON file)."""
-        argsLine = line.split()
-        lenArgs = len(argsLine)
-        if (self.__check_if_exist(argsLine, lenArgs) != 1):
+        if (type(line) == str):
+            argsLine = line.split()
+            lenArgs = len(argsLine)
+            if (self.__check_if_exist(argsLine, lenArgs) != 1):
 
-            searchInstance = argsLine[0] + "." + argsLine[1]
+                searchInstance = argsLine[0] + "." + argsLine[1]
+                the_classes = models.storage.all()
+
+                if searchInstance in the_classes.keys():
+                    del the_classes[searchInstance]
+                    models.storage.save()
+                else:
+                    print("** no instance found **")
+        else:  # Does not work with <class name>.destroy(<id>)
+            searchID = line[0] + "." + line[1]
             the_classes = models.storage.all()
-
-            if searchInstance in the_classes.keys():
-                del the_classes[searchInstance]
+            if searchID in the_classes.keys():
+                del the_classes[searchID]
                 models.storage.save()
             else:
                 print("** no instance found **")
@@ -183,6 +192,7 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         "Function that avoid that prints a new line with string"
         pass
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
