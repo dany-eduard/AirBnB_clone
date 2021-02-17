@@ -15,6 +15,11 @@ class TestBaseModel(unittest.TestCase):
         result = pep8style.check_files(["models/base_model.py"])
         self.assertEqual(result.total_errors, 0)
 
+    @classmethod
+    def setUpClass(cls):
+        """ set up instances for all tests """
+        cls.basemodel = BaseModel()
+
     def test_created_at(self):
         self.assertEqual(datetime, type(self.basemodel.created_at))
 
