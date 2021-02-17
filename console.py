@@ -70,15 +70,24 @@ class HBNBCommand(cmd.Cmd):
     def do_destroy(self, line):
         """ Deletes an instance based on the class name and id
             (save the change into the JSON file)."""
-        argsLine = line.split()
-        lenArgs = len(argsLine)
-        if (self.__check_if_exist(argsLine, lenArgs) != 1):
+        if(type(line) == str):
+            argsLine = line.split()
+            lenArgs = len(argsLine)
+            if (self.__check_if_exist(argsLine, lenArgs) != 1):
 
-            searchInstance = argsLine[0] + "." + argsLine[1]
+                searchInstance = argsLine[0] + "." + argsLine[1]
+                the_classes = models.storage.all()
+
+                if searchInstance in the_classes.keys():
+                    del the_classes[searchInstance]
+                    models.storage.save()
+                else:
+                    print("** no instance found **")
+        else:
+            searchID = line[0] + "." + line[1]
             the_classes = models.storage.all()
-
-            if searchInstance in the_classes.keys():
-                del the_classes[searchInstance]
+            if searchID in the_classes.keys():
+                del (the_classes[searchID])
                 models.storage.save()
             else:
                 print("** no instance found **")
@@ -151,12 +160,15 @@ class HBNBCommand(cmd.Cmd):
             if lineSplit[1] == "count()":
                 self.do_count(lineSplit[0])
 
-            my_count = lineSplit[1].split('"')
+            splitFunction = lineSplit[1].split('"')
             res = re.findall(r'\(.*?\)', lineSplit[1])
-            my_count[0] = my_count[0] + line[-1]
-            if my_count[0] == "show()":
-                myNewList = [lineSplit[0], my_count[1]]
+            splitFunction[0] = splitFunction[0] + line[-1]
+            if splitFunction[0] == "show()":
+                myNewList = [lineSplit[0], splitFunction[1]]
                 self.do_show(myNewList)
+            if splitFunction[0] == "destroy()":
+                myNewList = [lineSplit[0], splitFunction[1]]
+                self.do_destroy(myNewList)
         else:
             cmd.Cmd.default(self, line)
 
