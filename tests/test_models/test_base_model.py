@@ -38,6 +38,15 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(dict, type(my_dict))
         self.assertTrue("to_dict" in dir(self.basemodel))
 
+    def test_class_doc(self):
+        """ Test for class documentation """
+        self.assertTrue(len(BaseModel.__doc__) > 0)
+
+    def test_method_docs(self):
+        """ Test for method documentation """
+        for method in dir(BaseModel):
+            self.assertTrue(len(method.__doc__) > 0)
+
 
 if __name__ == "__main__":
     unittest.main()
