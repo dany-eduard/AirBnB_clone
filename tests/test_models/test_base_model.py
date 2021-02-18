@@ -21,10 +21,22 @@ class TestBaseModel(unittest.TestCase):
         cls.basemodel = BaseModel()
 
     def test_created_at(self):
+        """ Test created_at """
         self.assertEqual(datetime, type(self.basemodel.created_at))
 
     def test_updated_at(self):
+        """ Test updated_at """
         self.assertEqual(datetime, type(self.basemodel.updated_at))
+
+    def test_id_type(self):
+        """ Test for type id """
+        self.assertEqual(str, type(self.basemodel.id))
+
+    def test_to_dict(self):
+        """ Test to_dict """
+        my_dict = self.basemodel.to_dict()
+        self.assertEqual(dict, type(my_dict))
+        self.assertTrue("to_dict" in dir(self.basemodel))
 
 
 if __name__ == "__main__":
