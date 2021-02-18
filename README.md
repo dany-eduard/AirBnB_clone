@@ -38,4 +38,17 @@ Follow these steps:
 | `EOF`     | The end of file marker is sent to do_EOF (). If a command handler returns true, the program will exit cleanly.             | `(hbnb) ctrl+D`                                                                                                                                     |
 | `quit`    | Use it to exit the console, as an alternative to `EOF`                                                                     | `(hbnb) quit`                                                                                                                                       |
 
+## Examples
 
+![Example-imge](https://raw.githubusercontent.com/dany-eduard/AirBnB_clone/main/Example_CommandLineAirBnB-2021-02-18%20104733.png)
+
+## Environment
+
+- Language: Python
+- OS: Ubuntu 14.04 LTS
+- Style guidelines: PEP8
+
+## Authors
+
+- [AndresSern](https://github.com/AndresSern) - <andrecamposer@gmail.com>
+- [Daniel Eduardo Almagro](https://github.com/dany-eduard) - <danyeduard17@gmail.com>
