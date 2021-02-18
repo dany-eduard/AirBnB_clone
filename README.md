@@ -1,6 +1,6 @@
 # AirBnB clone - The console
 
-![project_logo](https://github.com/dany-eduard/AirBnB_clone/blob/main/Logo.png)
+![Logo](https://user-images.githubusercontent.com/54107524/108385839-0d9af380-71da-11eb-9226-15fbbd1e77c3.png)
 
 ## Description
 
@@ -40,7 +40,7 @@ Follow these steps:
 
 ## Examples
 
-![Example-imge](https://raw.githubusercontent.com/dany-eduard/AirBnB_clone/main/Example_CommandLineAirBnB-2021-02-18%20104733.png)
+![Example_CommandLineAirBnB-2021-02-18 104733](https://user-images.githubusercontent.com/54107524/108385930-25727780-71da-11eb-9ca7-5a39e6aa0889.png)
 
 ## Environment
 
