@@ -1,6 +1,6 @@
 # AirBnB clone - The console
 
-![project_logo](https://holbertonintranet.s3.amazonaws.com/uploads/medias/2018/6/65f4a1dd9c51265f49d0.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARDDGGGOUWMNL5ANN%2F20210218%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20210218T034209Z&X-Amz-Expires=86400&X-Amz-SignedHeaders=host&X-Amz-Signature=2dadd7694b6e44d37793cb1919a50e163b765877c58602dea90aafe2f5abbc78)
+![project_logo](https://github.com/dany-eduard/AirBnB_clone/blob/main/Logo.png)
 
 ## Description
 
