@@ -35,7 +35,6 @@ class HBNBCommand(cmd.Cmd):
 
         if line == "":
             print("** class name missing **")
-            #return false
         elif argsLine[0] not in self.__classes:
             print("** class doesn't exist **")
         else:
@@ -134,17 +133,17 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, line):
         """ Dafault function """
-        lineSplit = line.split('.')
+        lineSplit = line.replace(")", "").split('.')
         if len(lineSplit) > 1:
             class_name = lineSplit[0]
             function_name = lineSplit[1].split('"')[0] + line[-1]
-            strParameters = lineSplit[1][:-1].replace('"',"").replace("(",",")
+            strParameters = lineSplit[1].replace('"', "").replace("(", ",")
             listParameters = strParameters.split(",")
             listParameters[0] = class_name
             strParameters = " ".join(listParameters)
-            if function_name[:-1] == "all()":
+            if function_name == "all()":
                 self.do_all(class_name)
-            if function_name[:-1]  == "count()":
+            if function_name == "count()":
                 self.do_count(class_name)
             if function_name == "show()":
                 self.do_show(strParameters)
