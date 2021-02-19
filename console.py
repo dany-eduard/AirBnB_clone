@@ -78,7 +78,7 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, line):
         """Updates an instance based on the class name and id
         by adding or updating attribute(save the change into the JSON file)"""
-        argsLine = line
+        argsLine = line.split()
         lenArgs = len(argsLine)
 
         if self.__check_if_exist(argsLine, lenArgs) == 1:
@@ -142,22 +142,15 @@ class HBNBCommand(cmd.Cmd):
             listParameters = strParameters.split(",")
             listParameters[0] = class_name
             strParameters = " ".join(listParameters)
-            print(class_name)
-            print(function_name)
             if function_name[:-1] == "all()":
-                print("all")
                 self.do_all(class_name)
             if function_name[:-1]  == "count()":
-                print("count")
                 self.do_count(class_name)
             if function_name == "show()":
-                print("show")
                 self.do_show(strParameters)
             if function_name == "destroy()":
-                print("destroy")
                 self.do_destroy(strParameters)
             if function_name == "update()":
-                print("update")
                 self.do_update(strParameters)
         else:
             cmd.Cmd.default(self, line)
