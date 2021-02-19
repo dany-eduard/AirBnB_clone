@@ -142,16 +142,22 @@ class HBNBCommand(cmd.Cmd):
             listParameters = strParameters.split(",")
             listParameters[0] = class_name
             strParameters = " ".join(listParameters)
-
-            if function_name == "all()":
+            print(class_name)
+            print(function_name)
+            if function_name[:-1] == "all()":
+                print("all")
                 self.do_all(class_name)
-            if function_name == "count()":
+            if function_name[:-1]  == "count()":
+                print("count")
                 self.do_count(class_name)
             if function_name == "show()":
+                print("show")
                 self.do_show(strParameters)
             if function_name == "destroy()":
+                print("destroy")
                 self.do_destroy(strParameters)
             if function_name == "update()":
+                print("update")
                 self.do_update(strParameters)
         else:
             cmd.Cmd.default(self, line)
