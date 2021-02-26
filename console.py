@@ -45,48 +45,31 @@ class HBNBCommand(cmd.Cmd):
     def do_show(self, line):
         """ Prints the string representation of an instance based on the
             class name and id """
-        if (type(line) == str):
-            argsLine = line.split()
-            lenArgs = len(argsLine)
+        argsLine = line.split()
+        lenArgs = len(argsLine)
 
-            if (self.__check_if_exist(argsLine, lenArgs) != 1):
+        if (self.__check_if_exist(argsLine, lenArgs) != 1):
 
-                searchInstance = argsLine[0] + "." + argsLine[1]
-                the_classes = models.storage.all()
+            searchId = argsLine[0] + "." + argsLine[1]
+            dictInstan = models.storage.all()
 
-                if searchInstance in the_classes.keys():
-                    print(the_classes[searchInstance])
-                else:
-                    print("** no instance found **")
-        else:
-            searchID = line[0] + "." + line[1]
-            the_classes = models.storage.all()
-            if searchID in the_classes.keys():
-                print(the_classes[searchID])
+            if searchId in dictInstan.keys():
+                print(dictInstan[searchId])
             else:
                 print("** no instance found **")
 
     def do_destroy(self, line):
         """ Deletes an instance based on the class name and id
             (save the change into the JSON file)."""
-        if(type(line) == str):
-            argsLine = line.split()
-            lenArgs = len(argsLine)
-            if (self.__check_if_exist(argsLine, lenArgs) != 1):
+        argsLine = line.split()
+        lenArgs = len(argsLine)
+        if (self.__check_if_exist(argsLine, lenArgs) != 1):
 
-                searchInstance = argsLine[0] + "." + argsLine[1]
-                the_classes = models.storage.all()
+            searchId = argsLine[0] + "." + argsLine[1]
+            dictInstan = models.storage.all()
 
-                if searchInstance in the_classes.keys():
-                    del the_classes[searchInstance]
-                    models.storage.save()
-                else:
-                    print("** no instance found **")
-        else:
-            searchID = line[0] + "." + line[1]
-            the_classes = models.storage.all()
-            if searchID in the_classes.keys():
-                del (the_classes[searchID])
+            if searchId in dictInstan.keys():
+                del dictInstan[searchId]
                 models.storage.save()
             else:
                 print("** no instance found **")
@@ -94,10 +77,7 @@ class HBNBCommand(cmd.Cmd):
     def do_update(self, line):
         """Updates an instance based on the class name and id
         by adding or updating attribute(save the change into the JSON file)"""
-        if(type(line) == str):
-            argsLine = line.split()
-        else:
-            argsLine = line
+        argsLine = line.split()
         lenArgs = len(argsLine)
 
         if self.__check_if_exist(argsLine, lenArgs) == 1:
@@ -107,9 +87,9 @@ class HBNBCommand(cmd.Cmd):
         elif (lenArgs == 3):
             print("** value missing **")
         else:
-            searchInstance = argsLine[0] + "." + argsLine[1]
-            the_classes = models.storage.all()
-            if searchInstance in the_classes.keys():
+            searchId = argsLine[0] + "." + argsLine[1]
+            dictInstan = models.storage.all()
+            if searchId in dictInstan.keys():
                 if argsLine[3]:
                     argsLine[3] = argsLine[3].replace('"', "")
                 try:
@@ -119,8 +99,8 @@ class HBNBCommand(cmd.Cmd):
                         argsLine[3] = float(argsLine[3])
                     except ValueError:
                         argsLine[3] = argsLine[3]
-                the_classes[searchInstance].__dict__[argsLine[2]] = argsLine[3]
-                the_classes[searchInstance].save()
+                dictInstan[searchId].__dict__[argsLine[2]] = argsLine[3]
+                dictInstan[searchId].save()
             else:
                 print("** no instance found **")
 
@@ -129,9 +109,9 @@ class HBNBCommand(cmd.Cmd):
             based or not on the class name."""
         argsLine = line.split()
         if line == "" or argsLine[0] in self.__classes:
-            dirClasses = models.storage.all()
+            dictInstan = models.storage.all()
             listClasses = []
-            for key, value in dirClasses.items():
+            for key, value in dictInstan.items():
                 if line in key:
                     listClasses.append(value.__str__())
             print(listClasses)
@@ -142,12 +122,10 @@ class HBNBCommand(cmd.Cmd):
         " To retrieve the number of instances of a class "
         argsLine = line.split()
         if line == "" or argsLine[0] in self.__classes:
-            dirClasses = models.storage.all()
-            listClasses = []
+            dictInstan = models.storage.all()
             count = 0
-            for key, value in dirClasses.items():
+            for key, value in dictInstan.items():
                 if line in key:
-                    listClasses.append(value.__str__())
                     count += 1
             print(count)
         else:
@@ -155,31 +133,24 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, line):
         """ Dafault function """
-        lineSplit = line.split('.')
+        lineSplit = line.replace(")", "").split('.')
         if len(lineSplit) > 1:
-            if lineSplit[1] == "all()":
-                self.do_all(lineSplit[0])
-            if lineSplit[1] == "count()":
-                self.do_count(lineSplit[0])
-
-            splitFunction = lineSplit[1][:-1].split('"', 1)
-            temp = splitFunction[0]
-            if(len(splitFunction) > 1):
-                splitFunction[1] = splitFunction[1].replace('"', "")
-                splitFunction[1] = splitFunction[1].replace(' ', "")
-                splitFunction = (splitFunction[1].split(","))
-                splitFunction.insert(0, temp)
-                del temp
-                splitFunction[0] = splitFunction[0] + line[-1]
-                if splitFunction[0] == "show()":
-                    myNewList = [lineSplit[0], splitFunction[1]]
-                    self.do_show(myNewList)
-                if splitFunction[0] == "destroy()":
-                    myNewList = [lineSplit[0], splitFunction[1]]
-                    self.do_destroy(myNewList)
-                if splitFunction[0] == "update()":
-                    splitFunction[0] = lineSplit[0]
-                    self.do_update(splitFunction)
+            class_name = lineSplit[0]
+            function_name = lineSplit[1].split('"')[0] + line[-1]
+            strParameters = lineSplit[1].replace('"', "").replace("(", ",")
+            listParameters = strParameters.split(",")
+            listParameters[0] = class_name
+            strParameters = " ".join(listParameters)
+            if function_name == "all()":
+                self.do_all(class_name)
+            if function_name == "count()":
+                self.do_count(class_name)
+            if function_name == "show()":
+                self.do_show(strParameters)
+            if function_name == "destroy()":
+                self.do_destroy(strParameters)
+            if function_name == "update()":
+                self.do_update(strParameters)
         else:
             cmd.Cmd.default(self, line)
 
@@ -196,7 +167,7 @@ class HBNBCommand(cmd.Cmd):
             return 1
 
     def do_quit(self, line):
-        "quit command to exit the program"
+        "Quit command to exit the program\n"
         return True
 
     def do_EOF(self, line):
@@ -206,7 +177,6 @@ class HBNBCommand(cmd.Cmd):
     def emptyline(self):
         "Function that avoid that prints a new line with string"
         pass
-
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
