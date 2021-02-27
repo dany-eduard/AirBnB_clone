@@ -30,3 +30,13 @@ During this project, you will learn how to manipulate HTML and CSS languages. HT
 - [CSS](https://developer.mozilla.org/en-US/docs/Learn/CSS)
 - [MDN](https://developer.mozilla.org/en-US/)
 - [center boxes](https://css-tricks.com/centering-css-complete-guide/)
+
+## Expectation VS Reality
+
+![task](https://user-images.githubusercontent.com/54107524/109378252-10af7700-789f-11eb-81b8-25911f1e5a31.png)
+**Expectation**
+
+---
+
+![result](https://user-images.githubusercontent.com/54107524/109378160-3f791d80-789e-11eb-9bc3-9ad01b688982.png)
+**Reality**
